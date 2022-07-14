@@ -1,0 +1,38 @@
+{
+  "stackName": "amplify-eyelea-eylea-105531",
+  "props": {
+    "templateFile": "root-stack-template.json",
+    "parameters": {
+      "AuthRoleName": "amplify-eyelea-eylea-105531-authRole",
+      "UnauthRoleName": "amplify-eyelea-eylea-105531-unauthRole",
+      "DeploymentBucketName": "amplify-eyelea-eylea-105531-deployment"
+    },
+    "preserveLogicalIds": true,
+    "loadNestedStacks": {
+      "apieyelea": {
+        "templateFile": "api/eyelea/cloudformation-template.json",
+        "parameters": {
+          "AppSyncApiName": "eyelea",
+          "DynamoDBBillingMode": "PAY_PER_REQUEST",
+          "DynamoDBEnableServerSideEncryption": false,
+          "S3DeploymentBucket": "amplify-eyelea-eylea-105531-deployment",
+          "S3DeploymentRootKey": "amplify-appsync-files/ffde3c35d67bd3124b27b73892b22548c924d151",
+          "env": "eylea"
+        },
+        "preserveLogicalIds": true,
+        "loadNestedStacks": {
+          "Carowners": {
+            "templateFile": "api/eyelea/amplify-appsync-files/stacks/Carowners.json",
+            "preserveLogicalIds": true,
+            "loadNestedStacks": {}
+          },
+          "CustomResourcesjson": {
+            "templateFile": "api/eyelea/amplify-appsync-files/stacks/CustomResources.json",
+            "preserveLogicalIds": true,
+            "loadNestedStacks": {}
+          }
+        }
+      }
+    }
+  }
+}

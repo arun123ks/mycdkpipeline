@@ -1,0 +1,185 @@
+
+type Carowners {
+  id: ID!
+  first_name: String!
+  last_name: String!
+  email: String!
+  gender: String!
+  ip_address: String!
+  Car_Make: String!
+  country: String
+  _version: Int!
+  _deleted: Boolean
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelCarownersConnection {
+  items: [Carowners]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelCarownersFilterInput {
+  id: ModelIDInput
+  first_name: ModelStringInput
+  last_name: ModelStringInput
+  email: ModelStringInput
+  gender: ModelStringInput
+  ip_address: ModelStringInput
+  Car_Make: ModelStringInput
+  country: ModelStringInput
+  and: [ModelCarownersFilterInput]
+  or: [ModelCarownersFilterInput]
+  not: ModelCarownersFilterInput
+}
+
+type Query {
+  getCarowners(id: ID!): Carowners
+  listCarowners(filter: ModelCarownersFilterInput, limit: Int, nextToken: String): ModelCarownersConnection
+  syncCarowners(filter: ModelCarownersFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelCarownersConnection
+}
+
+input ModelCarownersConditionInput {
+  first_name: ModelStringInput
+  last_name: ModelStringInput
+  email: ModelStringInput
+  gender: ModelStringInput
+  ip_address: ModelStringInput
+  Car_Make: ModelStringInput
+  country: ModelStringInput
+  and: [ModelCarownersConditionInput]
+  or: [ModelCarownersConditionInput]
+  not: ModelCarownersConditionInput
+}
+
+input CreateCarownersInput {
+  id: ID
+  first_name: String!
+  last_name: String!
+  email: String!
+  gender: String!
+  ip_address: String!
+  Car_Make: String!
+  country: String
+  _version: Int
+}
+
+input UpdateCarownersInput {
+  id: ID!
+  first_name: String
+  last_name: String
+  email: String
+  gender: String
+  ip_address: String
+  Car_Make: String
+  country: String
+  _version: Int
+}
+
+input DeleteCarownersInput {
+  id: ID!
+  _version: Int
+}
+
+type Mutation {
+  createCarowners(input: CreateCarownersInput!, condition: ModelCarownersConditionInput): Carowners
+  updateCarowners(input: UpdateCarownersInput!, condition: ModelCarownersConditionInput): Carowners
+  deleteCarowners(input: DeleteCarownersInput!, condition: ModelCarownersConditionInput): Carowners
+}
+
+type Subscription {
+  onCreateCarowners: Carowners @aws_subscribe(mutations: ["createCarowners"])
+  onUpdateCarowners: Carowners @aws_subscribe(mutations: ["updateCarowners"])
+  onDeleteCarowners: Carowners @aws_subscribe(mutations: ["deleteCarowners"])
+}
+
